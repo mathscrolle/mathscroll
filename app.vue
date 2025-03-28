@@ -3,7 +3,7 @@
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     </Head>
-    <div class="min-h-screen bg-[#09090b] text-[#e4e4e7] flex items-center justify-center">
+    <div class="h-screen bg-[#09090b] text-[#e4e4e7] flex items-center justify-center">
       <main class="container mx-auto p-4">
         <NuxtPage />
       </main>

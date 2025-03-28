@@ -25,11 +25,11 @@
                 v-for="(option, optIndex) in question.options"
                 :key="optIndex"
                 @click="selectAnswer(option, index)"
-                class="aspect-square flex items-center justify-center text-center p-4 rounded-lg text-6xl font-medium transition-colors duration-200 border border-[#27272a] bg-[#1e1e21] text-[#e4e4e7]"
+                class="aspect-square flex items-center justify-center text-center p-4 rounded-lg text-6xl font-medium transition-all duration-200 border border-[#27272a] bg-[#1e1e21] text-[#e4e4e7]"
                 :class="{
-                  'hover:bg-[#27272a]': !question.answered,
-                  'bg-[#166534] text-[#bbf7d0] border-[#166534]': question.answered && option === question.correct,  /* Hijau lebih soft */
-                  'bg-[#7f1d1d] text-[#fecaca] border-[#7f1d1d]': question.answered && option !== question.correct && question.selectedAnswer === option /* Merah lebih soft */
+                  'hover:bg-[#27272a] hover:scale-[1.02] active:scale-95': !question.answered && currentQuestion === index,
+                  'bg-[#166534] text-[#bbf7d0] border-[#166534] transform scale-100': question.answered && option === question.correct,
+                  'bg-[#7f1d1d] text-[#fecaca] border-[#7f1d1d] transform scale-95': question.answered && option !== question.correct && question.selectedAnswer === option
                 }"
                 :disabled="question.answered"
               >
