@@ -55,9 +55,9 @@ const totalAnswered = ref(0)
 const currentIndex = ref(0)
 
 // Only show questions up to the current one
-const visibleQuestions = computed(() => {
-  return questions.value.slice(0, currentIndex.value + 1)
-})
+//const visibleQuestions = computed(() => {
+//  return questions.value.slice(0, currentIndex.value + 1)
+//})
 
 // Prepare questions with additional properties
 const prepareQuestions = (questionList) => {
@@ -77,12 +77,12 @@ onMounted(() => {
 })
 
 // Function to scroll to a specific question
-const scrollToQuestion = (index) => {
-  const questionElement = document.getElementById(`question-${index}`)
-  if (questionElement) {
-    questionElement.scrollIntoView({ behavior: 'smooth' })
-  }
-}
+//const scrollToQuestion = (index) => {
+//  const questionElement = document.getElementById(`question-${index}`)
+//  if (questionElement) {
+//    questionElement.scrollIntoView({ behavior: 'smooth' })
+//  }
+//}
 
 const selectAnswer = async (selected, questionIndex) => {
   const question = questions.value[questionIndex]
