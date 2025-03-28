@@ -11,7 +11,11 @@
           class="h-full w-full flex items-center justify-center snap-start"
           :id="`question-${index}`"
         >
-          <div class="bg-[#18181b] rounded-lg shadow-lg p-6 max-w-md w-full border border-[#27272a]">
+          <div 
+            class="bg-[#18181b] rounded-lg shadow-lg p-6 max-w-md w-full border border-[#27272a] question-box"
+            :class="{ 'glow-active': currentQuestion === index }"
+            :style="{ '--glow-color': getRandomGlowColor(index) }"
+          >
             <div class="mb-6">
               <h3 class="text-4xl mb-2 text-[#f4f4f5]">{{ question.question }}</h3>
             </div>
@@ -74,6 +78,11 @@ onMounted(() => {
   score.value = 0
   totalAnswered.value = 0
   currentIndex.value = 0
+  
+  // Add scroll event listener
+  if (scrollContainer.value) {
+    scrollContainer.value.addEventListener('scroll', handleScroll)
+  }
 })
 
 // Function to scroll to a specific question
@@ -115,6 +124,33 @@ const selectAnswer = async (selected, questionIndex) => {
   
   // No auto-scrolling - let the user scroll manually when ready
 }
+
+// Update the colors to be more subtle and green-focused
+const glowColors = [
+  '#4ade8066',  // Mint green
+  '#22c55e66',  // Medium green
+  '#15803d66',  // Forest green
+  '#16a34a66',  // Spring green
+  '#86efac66',  // Light green
+  '#4ade8066',  // Sage green
+]
+
+const getRandomGlowColor = (index) => {
+  return glowColors[index % glowColors.length]
+}
+
+const currentQuestion = ref(0)
+
+const handleScroll = () => {
+  if (!scrollContainer.value) return
+  const containerHeight = scrollContainer.value.clientHeight
+  const scrollPosition = scrollContainer.value.scrollTop
+  currentQuestion.value = Math.round(scrollPosition / containerHeight)
+}
+
+onMounted(() => {
+  scrollContainer.value?.addEventListener('scroll', handleScroll)
+})
 </script>
 
 <style>
@@ -146,5 +182,15 @@ html, body {
 
 .overflow-y-auto::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+.question-box {
+  position: relative;
+  box-shadow: 0 0 15px transparent;
+  transition: box-shadow 0.3s ease;
+}
+
+.question-box.glow-active {
+  box-shadow: 0 0 15px var(--glow-color);
 }
 </style>
