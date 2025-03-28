@@ -8,4 +8,13 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
+  app: {
+    baseURL: "/mathscroll/",
+  },
+  routeRules: {
+    "/**": { prerender: true }
+  },
+  nitro: {
+    preset: "github_pages"
+  }
 });
