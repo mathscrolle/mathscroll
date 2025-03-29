@@ -1,8 +1,8 @@
 <template>
   <div class="h-screen flex flex-col bg-[#09090b] text-[#e4e4e7]">
-    <div class="flex-1 overflow-hidden">
+    <div class="flex-1 overflow-hidden flex items-center">
       <div 
-        class="h-full snap-y snap-mandatory overflow-y-auto smooth-scroll" 
+        class="h-full w-full snap-y snap-mandatory overflow-y-auto smooth-scroll" 
         ref="scrollContainer"
       >
         <div 
@@ -12,7 +12,7 @@
           :id="`question-${index}`"
         >
           <div 
-            class="bg-[#18181b] rounded-lg shadow-lg p-6 max-w-md w-full border border-[#27272a] question-box"
+            class="bg-[#18181b] rounded-lg shadow-lg p-6 max-w-md w-full border border-[#27272a] question-box mx-auto"
             :class="{ 'glow-active': currentQuestion === index }"
             :style="{ '--glow-color': getRandomGlowColor(index) }"
           >
@@ -49,7 +49,7 @@
 
 
 <script setup>
-import { ref, watch, nextTick, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { generateQuestions, generateRandomQuestion } from '~/utils/mathQuestions'
 
 const score = ref(0)
@@ -58,12 +58,6 @@ const scrollContainer = ref(null)
 const totalAnswered = ref(0)
 const currentIndex = ref(0)
 
-// Only show questions up to the current one
-//const visibleQuestions = computed(() => {
-//  return questions.value.slice(0, currentIndex.value + 1)
-//})
-
-// Prepare questions with additional properties
 const prepareQuestions = (questionList) => {
   return questionList.map(q => ({
     ...q,
@@ -84,14 +78,6 @@ onMounted(() => {
     scrollContainer.value.addEventListener('scroll', handleScroll)
   }
 })
-
-// Function to scroll to a specific question
-//const scrollToQuestion = (index) => {
-//  const questionElement = document.getElementById(`question-${index}`)
-//  if (questionElement) {
-//    questionElement.scrollIntoView({ behavior: 'smooth' })
-//  }
-//}
 
 const selectAnswer = async (selected, questionIndex) => {
   const question = questions.value[questionIndex]
@@ -158,14 +144,13 @@ html, body {
   margin: 0;
   height: 100%;
   overscroll-behavior-y: contain;
-  background-color: #111827; /* Darker background */
+  background-color: #111827;
 }
 
 #__nuxt, #__layout {
   height: 100%;
 }
 
-/* Enhance scrolling experience */
 .snap-y {
   scroll-snap-type: y mandatory;
 }
@@ -176,21 +161,47 @@ html, body {
 
 /* Hide scrollbar but allow scrolling */
 .overflow-y-auto {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .overflow-y-auto::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 .question-box {
   position: relative;
   box-shadow: 0 0 15px transparent;
   transition: box-shadow 0.3s ease;
+  margin: 1rem;
 }
 
 .question-box.glow-active {
-  box-shadow: 0 0 15px var(--glow-color);
+  box-shadow: 0 0 25px var(--glow-color);
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .question-box {
+    margin: 0.75rem;
+  }
+  
+  .text-6xl {
+    font-size: 2.5rem;
+  }
+  
+  .text-4xl {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .question-box {
+    margin: 1rem;
+  }
+  
+  .question-box.glow-active {
+    box-shadow: 0 0 20px var(--glow-color);
+  }
 }
 </style>
